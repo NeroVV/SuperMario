@@ -12,7 +12,7 @@ class Game:
         # 帧数初始化
         self.clock = pygame.time.Clock()
 
-    def run(self,GRAPHICS):
+    def run(self,state):
         while True:
             # 获取输入设备更新事件
             for event in pygame.event.get():
@@ -21,10 +21,9 @@ class Game:
                     # 退出游戏
                     pygame.display.quit()
 
-            # 填充画布颜色
-            self.screen.fill((random.randint(0,255),random.randint(0,255),random.randint(0,255)))
-            image = get_image(GRAPHICS['mario_bros'],145,32,16,16,(0,0,0),5)
-            self.screen.blit(image,(300,300))
+            # 调用每个state更新方法
+            state.update(self.screen)
+
             # 更新画布
             pygame.display.update()
             # 帧数设置（每秒60帧）
