@@ -10,3 +10,9 @@ BG_MULTI = 2.678
 
 # 人物放大倍数
 PLAYER_MULTI = 2.9
+
+# 字体标题字体
+FONT = 'F:/workspace/SuperMario/resources/fonts/Fixedsys500c.ttf'
+
+# 不同阶段名称
+MAIN_MENU = 'main_menu'

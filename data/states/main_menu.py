@@ -5,12 +5,14 @@ import pygame
 from data import setup
 from data import tools
 from data import constants as C
+from data.components import info
 
 class MainMenu:
     def __init__(self):
         self.setup_backgroud()
         self.setup_player()
         self.setup_cursor()
+        self.info = info.Info(C.MAIN_MENU)
     
     def setup_backgroud(self):
         self.backgroud = setup.GRAPHICS['level_1']
@@ -99,3 +101,6 @@ class MainMenu:
         surface.blit(self.player_image,(110,490))
         # 把光标图片载入画布(220,360)位置
         surface.blit(self.cursor,(220,360))
+
+        self.info.update()
+        self.info.draw(surface)
