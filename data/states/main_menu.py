@@ -72,6 +72,8 @@ class MainMenu:
         )
     
     def setup_cursor(self):
+        # 继承精灵类
+        self.cursor = pygame.sprite.Sprite()
         # 获得物品图片
         self.item_objects = setup.GRAPHICS['item_objects']
         '''
@@ -82,7 +84,8 @@ class MainMenu:
         高: 8
         底色白色: 0,0,0
         '''
-        self.cursor = tools.get_image(
+        # 获取光标信息
+        self.cursor.image = tools.get_image(
             self.item_objects,
             24,
             160,
@@ -91,8 +94,33 @@ class MainMenu:
             (0,0,0),
             C.PLAYER_MULTI
         )
+        # 获取光标坐标
+        rect = self.cursor.image.get_rect()
+        # 设置光标位置
+        rect.x,rect.y = (220,360)
+        self.cursor.rect = rect
 
-    def update(self,surface):
+        # 设置光标状态机
+        self.cursor.state = '1P'
+
+    # 获取键盘按键，并更新光标位置
+    def update_cursor(self,keys):
+        # 向上按键状态设置为 1P，光标y轴位置改为360
+        if keys[pygame.K_UP]:
+            self.cursor.state = '1P'
+            self.cursor.rect.y = 360
+        # 向下按键状态设置为 2P，光标y轴位置改为405
+        elif keys[pygame.K_DOWN]:
+            self.cursor.state = '2P'
+            self.cursor.rect.y = 405
+        # 按回车键，判断选择状态，并进入游戏
+        elif keys[pygame.K_RETURN]:
+            if self.cursor.state == '1P':
+                pass
+            elif self.cursor.state == '2P':
+                pass
+
+    def update(self,surface,keys):
         # 把滑动窗口载入画布
         surface.blit(self.backgroud,self.viewport)
         # 把标题图片载入画布(170,100)位置
@@ -100,7 +128,9 @@ class MainMenu:
         # 把人物图片载入画布(110,490)位置
         surface.blit(self.player_image,(110,490))
         # 把光标图片载入画布(220,360)位置
-        surface.blit(self.cursor,(220,360))
+        surface.blit(self.cursor.image,self.cursor.rect)
+        # 光标移动
+        self.update_cursor(keys)
 
         self.info.update()
         self.info.draw(surface)

@@ -11,6 +11,8 @@ class Game:
         self.screen = pygame.display.get_surface()
         # 帧数初始化
         self.clock = pygame.time.Clock()
+        # 初始化按键keys值，避免游戏刚启动，keys值不存在
+        self.keys = pygame.key.get_pressed()
 
     def run(self,state):
         while True:
@@ -20,9 +22,15 @@ class Game:
                 if event.type == pygame.QUIT:
                     # 退出游戏
                     pygame.display.quit()
+                # 事件类型为向下按键
+                elif event.type == pygame.KEYDOWN:
+                    self.keys = pygame.key.get_pressed()
+                # 事件类型为向上按键
+                elif event.type == pygame.KEYUP:
+                    self.keys = pygame.key.get_pressed()
 
             # 调用每个state更新方法
-            state.update(self.screen)
+            state.update(self.screen,self.keys)
 
             # 更新画布
             pygame.display.update()
