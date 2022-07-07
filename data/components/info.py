@@ -3,6 +3,7 @@ __Author__ = 'Nero Wu'
 
 import pygame
 from data import constants as C
+from data.components import coin
 pygame.font.init()
 
 '''
@@ -15,6 +16,7 @@ class Info:
         self.state = state
         self.create_state_labels()
         self.create_info_labels()
+        self.flash_coin = coin.FlshingCoin()
 
     # 用于创建某阶段特有的文字
     def create_state_labels(self):
@@ -58,7 +60,7 @@ class Info:
 
     # 实时更新分数、金币数信息
     def update(self):
-        pass
+        self.flash_coin.update()
 
 
     # 传入图层，用于显示
@@ -74,3 +76,6 @@ class Info:
             # label为key，代表图片
             # self.state_labels[label]为value值，代表位置
             surface.blit(label,self.info_labels[label])
+
+        # menu闪烁的金币
+        surface.blit(self.flash_coin.image,self.flash_coin.rect)
