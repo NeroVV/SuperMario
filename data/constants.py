@@ -16,3 +16,5 @@ FONT = 'F:/workspace/SuperMario/resources/fonts/Fixedsys500c.ttf'
 
 # 不同阶段名称
 MAIN_MENU = 'main_menu'
+LOAD_SCREEN = 'load_screen'
+LEVEL = 'level'

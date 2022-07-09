@@ -13,6 +13,10 @@ class MainMenu:
         self.setup_player()
         self.setup_cursor()
         self.info = info.Info(C.MAIN_MENU)
+        # main_menu阶段是否结束的标记
+        self.finished = False
+        # main_menu这个阶段结束后，到load_screen
+        self.next = C.LOAD_SCREEN
     
     def setup_backgroud(self):
         self.backgroud = setup.GRAPHICS['level_1']
@@ -116,9 +120,10 @@ class MainMenu:
         # 按回车键，判断选择状态，并进入游戏
         elif keys[pygame.K_RETURN]:
             if self.cursor.state == '1P':
-                pass
+                # 表示main_menu这个阶段完结
+                self.finished = True
             elif self.cursor.state == '2P':
-                pass
+                self.finished = True
 
     def update(self,surface,keys):
         # 把滑动窗口载入画布

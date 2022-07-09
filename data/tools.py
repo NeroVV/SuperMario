@@ -2,19 +2,34 @@ __Author__ = 'Nero Wu'
 # 工具和游戏主控
 
 import pygame
-import random
 import os
 
 class Game:
-    def __init__(self):
+    def __init__(self,state_dict,start_state):
         # 画布初始化
         self.screen = pygame.display.get_surface()
         # 帧数初始化
         self.clock = pygame.time.Clock()
         # 初始化按键keys值，避免游戏刚启动，keys值不存在
         self.keys = pygame.key.get_pressed()
+        # 设置游戏开始状态
+        self.state_dict = state_dict
+        self.state = self.state_dict[start_state]
 
-    def run(self,state):
+    # 判断state状态，并更新到下个阶段
+    def update(self):
+        # state_dict中的类finished变量为True
+        if self.state.finished:
+            # 加载下一个类，字典的key
+            next_state = self.state.next
+            # 把原来类的finished变量设置为原始False
+            self.state.finished = False
+            # 根据next_state key，加载下一个类
+            self.state = self.state_dict[next_state]
+        # 最后调用state_dict中，类的update方法
+        self.state.update(self.screen,self.keys)
+
+    def run(self):
         while True:
             # 获取输入设备更新事件
             for event in pygame.event.get():
@@ -30,7 +45,7 @@ class Game:
                     self.keys = pygame.key.get_pressed()
 
             # 调用每个state更新方法
-            state.update(self.screen,self.keys)
+            self.update()
 
             # 更新画布
             pygame.display.update()

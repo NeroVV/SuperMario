@@ -4,6 +4,7 @@ __Author__ = 'Nero Wu'
 import pygame
 from data import constants as C
 from data.components import coin
+from data import tools,setup
 pygame.font.init()
 
 '''
@@ -26,6 +27,11 @@ class Info:
             self.state_labels[(self.create_label('2 PLAYER GAME'))] = (270,395)
             self.state_labels[(self.create_label('TOP - '))] = (288,455)
             self.state_labels[(self.create_label('000000'))] = (398,455)
+        elif self.state == C.LOAD_SCREEN:
+            self.state_labels[(self.create_label('WORLD'))] = (280,200)
+            self.state_labels[(self.create_label('1-1'))] = (430,200)
+            self.state_labels[(self.create_label('X     3'))] = (380,280)
+            self.player_image = tools.get_image(setup.GRAPHICS['mario_bros'],178,32,12,16,(0,0,0),C.BG_MULTI)
 
     # 用于创建通用分数、金币数等信息
     def create_info_labels(self):
@@ -79,3 +85,7 @@ class Info:
 
         # menu闪烁的金币
         surface.blit(self.flash_coin.image,self.flash_coin.rect)
+
+        # load_screen界面的马里奥
+        if self.state == C.LOAD_SCREEN:
+            surface.blit(self.player_image,(300,270))
